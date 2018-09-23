@@ -1,0 +1,35 @@
+version: "3.1"
+
+name: service-1
+description: Service-1 awesome service
+
+checks:
+  - check: self
+    memwatch: memwatch-next
+    metrics:
+      memoryUsage:
+        warn: 30
+        crit: 50
+      cpuUsage:
+        warn: 30
+        crit: 50
+
+  - name: mongo
+    url: mongodb://mongo/test
+    type: internal
+    interval: 3000
+    check: mongo
+
+  - name: service-2
+    url: http://service-2:3002
+    interval: 1000
+    critical: false
+    check: http
+
+  - name: service-3
+    url: http://service-3:3003
+    interval: 1000
+    check: http
+
+
+

@@ -1,0 +1,31 @@
+version: "3.1"
+
+name: service-2
+description: Service-1 awesome service
+
+checks:
+  - check: self
+    memwatch: memwatch-next
+    
+  - name: service-4
+    url: http://service-4:3004
+    type: external
+    method: HEAD
+    interval: 1000
+    check: http
+    path: /status
+
+  - name: redis
+    url: redis://redis
+    type: internal
+    check: redis
+
+  - name: elasticsearch
+    url: elasticsearch:9200
+    type: internal
+    check: elasticsearch
+
+
+
+
+

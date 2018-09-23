@@ -1,0 +1,44 @@
+{
+  "name": "healthchecks-api",
+  "version": "0.1.0",
+  "description": "The implementation of the [Health Checks API](https://github.com/hootsuite/health-checks-api) provided by [Hootsuite](https://hootsuite.com/).",
+  "main": "index.js",
+  "scripts": {
+    "test": "Unit tests TBD! && exit 0"
+  },
+  "author": {
+    "name": "CORE Services Team",
+    "email": "bdu@bauermedia.com",
+    "url": "http://confluence.bauermedia-digital.com/display/TEAM/Team+Core+Services"
+  },
+  "contributors": [
+    {
+      "name": "Waldek Kozba",
+      "email": "100assc@gmail.com",
+      "url": "https://github.com/valdemon"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "elasticsearch": "^15.1.1",
+    "http-status": "^1.2.0",
+    "js-yaml": "^3.12.0",
+    "json-stringify-safe": "^5.0.1",
+    "mime-types": "^2.1.20",
+    "moment": "^2.22.2",
+    "mongodb": "^3.1.4",
+    "os-utils": "0.0.14",
+    "redis": "^2.8.0",
+    "superagent": "^3.8.3",
+    "superagent-no-cache": "^0.1.1"
+  },
+  "keywords": [
+    "health",
+    "healthcheck",
+    "health-checks",
+    "microservice",
+    "microservices",
+    "hootsuite",
+    "health-checks-api"
+  ]
+}

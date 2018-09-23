@@ -1,0 +1,82 @@
+version: '3'
+services:
+  explorer:
+    image: hootsuite/microservice-graph-explorer:1.0.0
+    ports:
+     - 9000:9000
+    volumes:
+      - ./conf/explorer.conf:/opt/docker/conf/application.conf
+
+  demo-app:
+    image: health-check-test-service
+    hostname: demo-app
+    ports:
+      - 3000:3000
+    environment:
+      HEALTH_CHECK_CONF_PATH: /service/conf/dependencies.yml
+      HEALTH: 1
+    volumes:
+      - ./conf/demo-app.yml:/service/conf/dependencies.yml
+
+  service-1:
+    image: health-check-test-service
+    hostname: service-1
+    ports:
+      - 3001:3001
+    environment:
+      HEALTH_CHECK_CONF_PATH: /service/conf/dependencies.yml
+      HEALTH: 1
+      PORT: 3001
+    volumes:
+      - ./conf/service-1.yml:/service/conf/dependencies.yml
+
+  service-2:
+    image: health-check-test-service
+    hostname: service-2
+    ports:
+      - 3002:3002
+    environment:
+      HEALTH_CHECK_CONF_PATH: /service/conf/dependencies.yml
+      HEALTH: 1
+      PORT: 3002
+    volumes:
+      - ./conf/service-2.yml:/service/conf/dependencies.yml
+
+  service-3:
+    image: health-check-test-service
+    hostname: service-3
+    ports:
+      - 3003:3003
+    environment:
+      HEALTH_CHECK_CONF_PATH: /service/conf/dependencies.yml
+      HEALTH: 1
+      PORT: 3003
+    volumes:
+      - ./conf/service-3.yml:/service/conf/dependencies.yml
+  
+  service-4:
+    image: health-check-test-service
+    hostname: service-4
+    ports:
+      - 3004:3004
+    environment:
+      PORT: 3004
+    volumes:
+      - ./conf/service-3.yml:/service/conf/dependencies.yml
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: test
+
+  redis:
+      image: redis:alpine
+      restart: always
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:${ELK_VERSION:-6.3.0}
+    ports:
+      - "9200:9200"

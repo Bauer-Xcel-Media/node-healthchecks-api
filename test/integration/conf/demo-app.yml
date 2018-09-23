@@ -1,0 +1,29 @@
+version: "3.1"
+
+name: demo-app
+description: Nice demo application :)
+
+checks:
+  - check: self
+    memwatch: memwatch-next
+
+  - name: mongo
+    url: mongodb://mongo/test
+    type: internal
+    interval: 3000
+    check: mongo
+
+  - name: service-1
+    url: http://service-1:3001
+    type: external
+    interval: 1000
+    check: http
+
+  - name: service-2
+    url: http://service-2:3002
+    type: external
+    critical: false
+    interval: 1000
+    check: http
+
+
