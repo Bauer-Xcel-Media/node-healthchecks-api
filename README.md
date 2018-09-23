@@ -7,7 +7,7 @@
     - [Functionality](#functionality)
     - [Health status reports](#health-status-reports)
     - [Usage](#usage)
-        - [Example - [Express.js](https://expressjs.com/) application](#example---expressjshttpsexpressjscom-application)
+        - [Example - Express.js powered application](#example---expressjs-powered-application)
     - [Check types](#check-types)
         - [`self` check](#self-check)
             - [Memory leak detection](#memory-leak-detection)
@@ -116,7 +116,9 @@ checks:
 The library declaration depends on chosen `http server` framework, but in any case this will be about 2 lines of code.
 See the examples below.
 
-### Example - [Express.js](https://expressjs.com/) application
+### Example - Express.js powered application
+
+See: [Express.js framework](https://expressjs.com/).
 
 ```javascript
 const healthCheck = require('healthchecks-api');
