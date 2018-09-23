@@ -1,7 +1,8 @@
 {
   "name": "healthchecks-api",
   "version": "0.1.0",
-  "description": "The implementation of the [Health Checks API](https://github.com/hootsuite/health-checks-api) provided by [Hootsuite](https://hootsuite.com/).",
+  "description": "The implementation of the Health Checks API (https://github.com/hootsuite/health-checks-api) provided by Hootsuite (https://hootsuite.com/).",
+  "homepage": "https://github.com/Bauer-Xcel-Media/node-healthchecks-api",
   "main": "index.js",
   "scripts": {
     "test": "Unit tests TBD! && exit 0"
@@ -19,6 +20,15 @@
     }
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Bauer-Xcel-Media/node-healthchecks-api.git"
+  },
+  "bugs": "https://github.com/Bauer-Xcel-Media/node-healthchecks-api/issues",
+  "private": false,
+  "engines": {
+      "node": ">=8.0.0"
+  },
   "dependencies": {
     "elasticsearch": "^15.1.1",
     "http-status": "^1.2.0",

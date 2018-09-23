@@ -55,7 +55,7 @@ The dependencies can be:
 
 Another dependency division is:
 
-* `traversable` - this means the dependency implements the [Health Checks API](https://github.com/hootsuite/health-checks-api) itself and therefore one can traverse to its `Healt Check API endpoint` and check its own state together with its dependencies states.
+* `traversable` - this means the dependency implements the [Health Checks API](https://github.com/hootsuite/health-checks-api) itself and therefore one can traverse to its `Health Check API endpoint` and check its own state together with its dependencies states.
 * `non-traversable` - the dependency health state is still reported by an appropriate check type, but the service does not implement the [Health Checks API](https://github.com/hootsuite/health-checks-api), therefore one cannot drill-down due to observe its internal state details.
 
 __NOTE__: The `traversable` dependency capability is resolved by this module in a runtime.
