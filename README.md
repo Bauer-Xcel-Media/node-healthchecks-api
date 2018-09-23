@@ -1,8 +1,8 @@
-# Health Checks for a microservices
+# Health Checks for microservices
 
 <!-- TOC -->
 
-- [Health Checks for a microservices](#health-checks-for-a-microservices)
+- [Health Checks for microservices](#health-checks-for-microservices)
     - [Installation](#installation)
     - [Functionality](#functionality)
     - [Health status reports](#health-status-reports)
