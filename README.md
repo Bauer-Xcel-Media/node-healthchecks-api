@@ -1,5 +1,9 @@
 # Health Checks for microservices
 
+[![Build Status](https://travis-ci.org/Bauer-Xcel-Media/node-healthchecks-api.png?branch=master)](https://travis-ci.org/Bauer-Xcel-Media/node-healthchecks-api)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[![codecov](https://codecov.io/gh/Bauer-Xcel-Media/node-healthchecks-api/branch/master/graph/badge.svg)](https://codecov.io/gh/Bauer-Xcel-Media/node-healthchecks-api)
+
 A [Node.js](https://nodejs.org) implementation of the [Health Checks API](https://github.com/hootsuite/health-checks-api) provided by [Hootsuite](https://hootsuite.com/).
 
 <!-- TOC -->
