@@ -5,7 +5,11 @@
   "homepage": "https://github.com/Bauer-Xcel-Media/node-healthchecks-api",
   "main": "index.js",
   "scripts": {
-    "test": "Unit tests TBD! && exit 0"
+    "test": "npm run -s test:jest && npm run test:success || npm run -s test:failure",
+    "test:jest": "NODE_ENV=test jest --verbose --coverage ./test/unit",
+    "test:success": "echo 'TESTS SUCCESSFUL :-)'",
+    "test:failure": "echo 'TESTS FAILED :-(' && exit 1",
+    "cz": "git-cz"
   },
   "author": {
     "name": "CORE Services Team",
@@ -25,9 +29,8 @@
     "url": "https://github.com/Bauer-Xcel-Media/node-healthchecks-api.git"
   },
   "bugs": "https://github.com/Bauer-Xcel-Media/node-healthchecks-api/issues",
-  "private": false,
   "engines": {
-      "node": ">=8.0.0"
+    "node": ">=8.0.0"
   },
   "dependencies": {
     "elasticsearch": "^15.1.1",
@@ -50,5 +53,18 @@
     "microservices",
     "hootsuite",
     "health-checks-api"
-  ]
+  ],
+  "devDependencies": {
+    "commitizen": "^3.0.2",
+    "cwd": "^0.10.0",
+    "cz-conventional-changelog": "^2.1.0",
+    "istanbul": "^0.4.5",
+    "jest": "^23.6.0",
+    "nock": "^10.0.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }

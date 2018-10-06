@@ -1,5 +1,7 @@
 # Health Checks for microservices
 
+A [Node.js](https://nodejs.org) implementation of the [Health Checks API](https://github.com/hootsuite/health-checks-api) provided by [Hootsuite](https://hootsuite.com/).
+
 <!-- TOC -->
 
 - [Health Checks for microservices](#health-checks-for-microservices)
@@ -37,8 +39,6 @@
 ```bash
 npm install --save heathchecks-api
 ```
-
-This is the [Node.js](https://nodejs.org) implementation of the [Health Checks API](https://github.com/hootsuite/health-checks-api) provided by [Hootsuite](https://hootsuite.com/).
 
 ## Functionality
 
@@ -272,7 +272,7 @@ Here's the example for the [Express.js](https://expressjs.com/) framework:
  * @returns {Promise}
  */
 const express = async (service, server, route) => {
-    // 1. Expose given route in the `http` server application, here an example foe the `Express.js`:
+    // 1. Expose given route in the `http` server application, here an example for the `Express.js`:
     return server.get(path.join('/status', route.path), async (req, res, next) => {
         try {
             // 2. Combine the `Express.js` route parameters:
@@ -350,6 +350,9 @@ class MyCheck extends Check {
 
     async start() {
         // actual check code to be executed in `this.interval` [ms] intervals.
+        // ...
+        // set up the resulting state:
+        this.ok(); // | this.warn(description, details); | this.crit(description, details);
     }
 }
 // This is optional - by default the new check type will be the class name in lowercase.
@@ -392,7 +395,8 @@ description: Nice demo application :)
 
 checks:
   - check: mycheck
-    myproperty: value
+    # properties are accessible in the class instance property `config` - eg. `this.config.myProperty`.
+    myProperty: value
 ```
 
 #### Exporting multiple check classes in a custom module
@@ -404,7 +408,7 @@ The `addChecks` method can take a value of following parameter types as an argum
 * single `Check` class extension,
 * array of `Check` class extension classes,
 * object instance - a map with a key representings a check name (type) and value being a `Check` class extension class.
-* module name to link from `NPM` registry.
+* module name to link from `NPM` registry. The module must export one of above.
 
 ## Testing
 
@@ -415,7 +419,7 @@ TBD
 ### Integration test
 
 The integration test is a [Docker Compose](https://docs.docker.com/compose/) based setup.
-The setup shows the `health-check-api` functionality reported by [Microservice Graph Explorer](https://github.com/hootsuite/microservice-graph-explorer) - the dashboard-like application which presents service dependencies and their health status and allows to traverse dependencies which expose [Health Checks API](https://github.com/hootsuite/health-checks-api).
+The setup shows the `health-check-api` functionality reported by [Microservice Graph Explorer](https://github.com/hootsuite/microservice-graph-explorer) - the dashboard-like application which presents service dependencies and their health status and allows to traverse dependencies which expose [Health Checks API](https://hootsuite.github.io/health-checks-api/).
 
 One can observe changing `health status` of the `demo-app` application by:
 
@@ -426,7 +430,7 @@ One can observe changing `health status` of the `demo-app` application by:
 #### The set-up
 
 * `explorer` - [Microservice Graph Explorer](https://github.com/hootsuite/microservice-graph-explorer) instance,
-* `demo-app`, `service-1`, `service-2` and `service-3` - instances of [Express.js](https://expressjs.com/) based applications exposing the [Health Checks API](https://github.com/hootsuite/health-checks-api) endpoints by the usage of this module,
+* `demo-app`, `service-1`, `service-2` and `service-3` - instances of [Express.js](https://expressjs.com/) based applications exposing the [Health Checks API](https://hootsuite.github.io/health-checks-api/) endpoints by the usage of this module,
 * `service-4` - an `http` service which does not expose the `Health Checks API`,
 * `mongo` - [Mongo DB](https://www.mongodb.com/) instance,
 * `elasticsearch` - [Elasticsearch](https://www.elastic.co/products/elasticsearch) instance,
