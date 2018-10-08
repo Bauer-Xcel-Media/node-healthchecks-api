@@ -12,7 +12,7 @@
     "cz": "git-cz",
     "travis-deploy-once": "travis-deploy-once",
     "semantic-release": "semantic-release",
-    "lint":  "eslint index.js lib test/unit",
+    "lint": "eslint index.js lib test/unit",
     "pretest": "npm run lint"
   },
   "author": {
