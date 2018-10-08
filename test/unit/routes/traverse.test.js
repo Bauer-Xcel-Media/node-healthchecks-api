@@ -90,13 +90,13 @@ it('should return a proper response when dependency has not been found', async (
             {
                 description: constants.MSG_CANT_TRAVERSE,
                 result: constants.CRIT,
-                details: `Status path 'fake' is not registered`,
+                details: 'Status path \'fake\' is not registered',
             }
         ],
     });
 });
 
-it(`should return an 'about' response when request paramete 'dependency' is not provided`, async () => {
+it('should return an \'about\' response when request paramete \'dependency\' is not provided', async () => {
     const host = 'localhost:9000';
     const packageJson = {
         author: 'John Doe',
@@ -151,19 +151,3 @@ it('should return a proper response when dependency http connection fails', asyn
         }]
     });
 });
-
-
-
-// it('should return a proper response with a type parameter', async () => {
-//     return expect(testee({ type: 'check1' }, {
-//         checks: [
-//             check1,
-//             check2,
-//         ],
-//     })).resolves.toEqual({
-//         status: status.OK,
-//         contentType: constants.MIME_APPLICATION_JSON,
-//         headers: constants.DEFAULT_RESPONSE_HEADERS,
-//         body: check1.status.status,
-//     });
-// });

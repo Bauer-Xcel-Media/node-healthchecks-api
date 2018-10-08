@@ -1,8 +1,10 @@
 # Health Checks for microservices
 
+[![npm version](https://badge.fury.io/js/healthchecks-api.svg)](https://badge.fury.io/js/healthchecks-api)
 [![Build Status](https://travis-ci.org/Bauer-Xcel-Media/node-healthchecks-api.png?branch=master)](https://travis-ci.org/Bauer-Xcel-Media/node-healthchecks-api)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![codecov](https://codecov.io/gh/Bauer-Xcel-Media/node-healthchecks-api/branch/master/graph/badge.svg)](https://codecov.io/gh/Bauer-Xcel-Media/node-healthchecks-api)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 A [Node.js](https://nodejs.org) implementation of the [Health Checks API](https://github.com/hootsuite/health-checks-api) provided by [Hootsuite](https://hootsuite.com/).
 
@@ -418,7 +420,13 @@ The `addChecks` method can take a value of following parameter types as an argum
 
 ### Unit tests
 
-TBD
+[![codecov](https://codecov.io/gh/Bauer-Xcel-Media/node-healthchecks-api/branch/master/graph/badge.svg)](https://codecov.io/gh/Bauer-Xcel-Media/node-healthchecks-api)
+
+Run unit tests locally:
+
+```shell
+npm test
+```
 
 ### Integration test
 

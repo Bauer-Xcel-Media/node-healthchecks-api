@@ -22,6 +22,7 @@ const testee = require('../../lib/utils');
 
 it.only('Should call npm link by exec and require module after', async () => {
     const result = await testee.linkAndRequire(testModule);
-    expect(mockExec).toHaveBeenNthCalledWith(1, `npm link ${testModule}`, {"cwd": path.join(constants.CWD, 'lib')}, expect.any(Function));
+    expect(mockExec).toHaveBeenNthCalledWith(1, `npm link ${testModule}`,
+        {'cwd': path.join(constants.CWD, 'lib')}, expect.any(Function));
     expect(result).toBe(mockTestContent);
 });

@@ -71,7 +71,7 @@ it('should return a proper response when providing package.json data', async () 
         name: 'config_name',
         description: 'config_description',
         homepage: 'config_projectHome',
-        repository: { 
+        repository: {
             url: 'config_projectRepo'
         },
     };
@@ -103,17 +103,3 @@ it('should return a proper response when providing package.json data', async () 
         }),
     });
 });
-
-// it('should return a proper response with a type parameter', async () => {
-//     return expect(testee({ type: 'check1' }, {
-//         checks: [
-//             check1,
-//             check2
-//         ],
-//     })).resolves.toEqual({
-//         status: status.OK,
-//         contentType: constants.MIME_APPLICATION_JSON,
-//         headers: constants.DEFAULT_RESPONSE_HEADERS,
-//         body: check1.status.status,
-//     });
-// });

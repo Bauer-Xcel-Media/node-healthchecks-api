@@ -49,7 +49,7 @@ const mockLinkAndRequire = jest.fn(() => mockLinkAndRequireResult.result);
 const createCheckClass = (state, type) => {
     const _mock = {
         construct: jest.fn((target, args) => new target(...args)),
-    }
+    };
 
     const result = class extends Check {
         start() {
@@ -76,12 +76,12 @@ const createCheckClass = (state, type) => {
     return proxy;
 };
 
-class mockMyCheckClass extends createCheckClass('crit', 'mycheck') {};
-class mockMyCheckClass2 extends createCheckClass('ok') {};
-class mockMyCheckClass3 extends createCheckClass('warn') {};
-class mockMyCheckClass4 extends createCheckClass('crit') {};
-class mockMyCheckClass5 extends createCheckClass('ok') {};
-class mockMyCheckClass6 extends createCheckClass('crit') {};
+class mockMyCheckClass extends createCheckClass('crit', 'mycheck') {}
+class mockMyCheckClass2 extends createCheckClass('ok') {}
+class mockMyCheckClass3 extends createCheckClass('warn') {}
+class mockMyCheckClass4 extends createCheckClass('crit') {}
+class mockMyCheckClass5 extends createCheckClass('ok') {}
+class mockMyCheckClass6 extends createCheckClass('crit') {}
 
 
 let mockConfig = MOCK_CONFIG;
@@ -117,8 +117,10 @@ const mockModules = () => {
 mockModules();
 
 const initializationExpectations = () => {
-    expect(mockAdapter).toHaveBeenNthCalledWith(1, expect.objectContaining({ packageJson }), mockServer, { handler: mockMyRoute, path: '/myroute' } );
-    expect(mockAdapter).toHaveBeenNthCalledWith(2, expect.objectContaining({ packageJson }), mockServer, { handler: mockMyRoute2, path: '/:myparam' } );
+    expect(mockAdapter).toHaveBeenNthCalledWith(1, 
+        expect.objectContaining({ packageJson }), mockServer, { handler: mockMyRoute, path: '/myroute' } );
+    expect(mockAdapter).toHaveBeenNthCalledWith(2, 
+        expect.objectContaining({ packageJson }), mockServer, { handler: mockMyRoute2, path: '/:myparam' } );
     checkClassExpectations(mockMyCheckClass, MOCK_CHECK_CONFIG);
 };
 
@@ -165,9 +167,11 @@ describe('Initialization', async () => {
         initializationExpectations();
     });
 
-    it ('should fail when wrong adapter type is provided', async () => expect(testee(mockServer, { adapter: 1 })).rejects.toThrow('adapter=1'));
+    it ('should fail when wrong adapter type is provided', 
+        async () => expect(testee(mockServer, { adapter: 1 })).rejects.toThrow('adapter=1'));
 
-    it ('should fail when not existing config path is provided', async () => expect(testee(mockServer, { service: { configPath: 'does-not-exist' }})).rejects.toThrow('does-not-exist'));
+    it ('should fail when not existing config path is provided', async () => expect(testee(mockServer,
+        { service: { configPath: 'does-not-exist' }})).rejects.toThrow('does-not-exist'));
 });
 
 describe('addChecks method', async () => {

@@ -2,7 +2,8 @@
 
 const EventEmitter = require('events'); 
 const constants = require('../constants');
-const Check = require('../../../lib/check');
+// uncomment following when https://github.com/facebook/jest/issues/2549 is solved. 
+// const Check = require('../../../lib/check');
 
 const makeMocks = (db = {
     topology: new EventEmitter(),
@@ -30,10 +31,10 @@ const makeMocks = (db = {
 };
 
 const testStatusChange = async (event, expected, connectCallTimes = 1, initialStatus) => {
-    const { Testee, db, mongodb, mockConnect } = makeMocks(event instanceof Error ? event : undefined);
+    const { Testee, db, mockConnect } = makeMocks(event instanceof Error ? event : undefined);
     const options = {
         url: 'mongo',
-    }
+    };
     const testeeInstance = new Testee(options);
     if (initialStatus) {
         testeeInstance.setStatus(initialStatus, 'status');
@@ -48,24 +49,29 @@ const testStatusChange = async (event, expected, connectCallTimes = 1, initialSt
 };
 
 it ('should instantiate the Mongo check class properly', async () => {
-    const { Testee, mockConnect, mongodb } = makeMocks();
+    const { Testee } = makeMocks();
     const options = {
         url: 'mongo',
-    }
-    const testeeInstance = new Testee(options);
+    };
+    new Testee(options);
     // uncomment following when https://github.com/facebook/jest/issues/2549 is solved.
     // expect(testeeInstance).toBeInstanceOf(Check);
     return expect(Testee.type).toBe('mongo');
 });
 
-it ('should set the status to OK, when mongodb topology is fine', () => testStatusChange(undefined, constants.OK, 1));
+it ('should set the status to OK, when mongodb topology is fine',
+    () => testStatusChange(undefined, constants.OK, 1));
 
-it (`should set the status to CRIT, when mongodb topology emits the 'error' event`, () => testStatusChange('error', constants.CRIT, 1));
+it ('should set the status to CRIT, when mongodb topology emits the \'error\' event',
+    () => testStatusChange('error', constants.CRIT, 1));
 
-it (`should set the status to OK, when mongodb topology emits the 'close' event and restarts`, () => testStatusChange('close', constants.OK, 2));
+it ('should set the status to OK, when mongodb topology emits the \'close\' event and restarts',
+    () => testStatusChange('close', constants.OK, 2));
 
-it (`should set the status to OK, when mongodb topology emits the 'reconnect' event`, () => testStatusChange('reconnect', constants.OK, 1, constants.CRIT));
+it ('should set the status to OK, when mongodb topology emits the \'reconnect\' event',
+    () => testStatusChange('reconnect', constants.OK, 1, constants.CRIT));
 
-it (`should set the status to CRIT, when 'MongoClient.connect' throws an Error`, () => testStatusChange(new Error('error'), constants.CRIT, 1));
+it ('should set the status to CRIT, when \'MongoClient.connect\' throws an Error',
+    () => testStatusChange(new Error('error'), constants.CRIT, 1));
 
 

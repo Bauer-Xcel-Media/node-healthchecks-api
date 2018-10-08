@@ -3,11 +3,8 @@
 const healthCheck = require('healthchecks-api');
 
 const express = require('express');
-const packageJson = require('./package.json');
 const app = express();
 const morgan = require('morgan');
-const fs = require('fs');
-const util = require('util');
 var os = require('os');
 
 const PORT = process.env.PORT || 3000;
@@ -24,11 +21,11 @@ let cpuUsage = process.cpuUsage();
         await healthCheck(app);
     }
 
-    app.get('/status', (req, res, next) => res.json({
+    app.get('/status', (req, res) => res.json({
         message: 'OK',
     }));
 
-    app.get('/make-leak', async (req, res, next) => {
+    app.get('/make-leak', async (req, res) => {
         counter = 0;
         cpuUsage = process.cpuUsage(cpuUsage);
 
@@ -43,7 +40,6 @@ let cpuUsage = process.cpuUsage();
 
         grow();
 
-        // const osRelease = await util.promisify(fs.readFile)('/etc/os-release');
         res.json({
             message: 'HEAVY',
             cpus: os.cpus(),
@@ -54,9 +50,8 @@ let cpuUsage = process.cpuUsage();
         });
     });
 
-    app.get('/heavy', async (req, res, next) => {
+    app.get('/heavy', async (req, res) => {
         cpuUsage = process.cpuUsage(cpuUsage);
-        // const osRelease = await util.promisify(fs.readFile)('/etc/os-release');
         res.json({
             message: 'HEAVY',
             cpus: os.cpus(),
@@ -66,6 +61,7 @@ let cpuUsage = process.cpuUsage();
             cpuUsage,
         });
     });
+    // eslint-disable-next-line no-console
     app.listen(PORT, () => console.log('Example app listening on port ', PORT));
 })();
 

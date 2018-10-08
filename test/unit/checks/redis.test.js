@@ -2,7 +2,8 @@
 
 const EventEmitter = require('events'); 
 const constants = require('../constants');
-const Check = require('../../../lib/check');
+// uncomment following when https://github.com/facebook/jest/issues/2549 is solved. 
+// const Check = require('../../../lib/check');
 
 const makeMocks = () => {
     jest.resetModules();
@@ -24,10 +25,10 @@ const makeMocks = () => {
 };
 
 const testStatusChange = async (event, expected, initialStatus) => {
-    const { Testee, mockCreateClient, redis, mockClient } = makeMocks();
+    const { Testee, mockCreateClient, mockClient } = makeMocks();
     const options = {
         url: 'redis',
-    }
+    };
     const testeeInstance = new Testee(options);
     if (initialStatus) {
         testeeInstance.setStatus(initialStatus, 'status');
@@ -42,21 +43,22 @@ const testStatusChange = async (event, expected, initialStatus) => {
 };
 
 it ('should instantiate the Redis check class properly', async () => {
-    const { Testee, mockCreateClient, redis, mockClient } = makeMocks();
+    const { Testee } = makeMocks();
     const options = {
         url: 'redis',
-    }
-    const testeeInstance = new Testee(options);
-    // uncomment following when https://github.com/facebook/jest/issues/2549 is solved.
+    };
+    // change and uncomment following 3 lines when https://github.com/facebook/jest/issues/2549 is solved.
+    new Testee(options);
+    // const testeeInstance = new Testee(options);
     // expect(testeeInstance).toBeInstanceOf(Check);
     return expect(Testee.type).toBe('redis');
 });
 
-it (`should instantiate Redis client with proper 'url' and 'retry_strategy' function`, async () => {
-    const { Testee, mockCreateClient, redis, mockClient } = makeMocks();
+it ('should instantiate Redis client with proper \'url\' and \'retry_strategy\' function', async () => {
+    const { Testee, mockClient } = makeMocks();
     const options = {
         url: 'redis',
-    }
+    };
     const testeeInstance = new Testee(options);
     expect(await testeeInstance.start()).toBe(testeeInstance);
     expect(mockClient.url).toBe(options.url);
@@ -69,18 +71,17 @@ it (`should instantiate Redis client with proper 'url' and 'retry_strategy' func
 });
 
 it ('should set the status to OK when initialized', () => testStatusChange(undefined, constants.WARN));
-it (`should set the status to CRIT when Redis client emits the 'error' event`, () => testStatusChange('error', constants.CRIT));
-it (`should set the status to CRIT when Redis client emits the 'end' event`, () => testStatusChange('end', constants.CRIT));
+it ('should set the status to CRIT when Redis client emits the \'error\' event',
+    () => testStatusChange('error', constants.CRIT));
+it ('should set the status to CRIT when Redis client emits the \'end\' event',
+    () => testStatusChange('end', constants.CRIT));
 
-it (`should set the status to OK when Redis client emits the 'ready' event`, () => testStatusChange('ready', constants.OK, constants.CRIT));
+it ('should set the status to OK when Redis client emits the \'ready\' event',
+    () => testStatusChange('ready', constants.OK, constants.CRIT));
 
-it (`should set the status to OK when Redis client emits the 'ready' event`, () => testStatusChange('connect', constants.WARN, constants.CRIT));
+it ('should set the status to OK when Redis client emits the \'ready\' event',
+    () => testStatusChange('connect', constants.WARN, constants.CRIT));
 
-it (`should set the status to OK when Redis client emits the 'ready' event`, () => testStatusChange('reconnecting', constants.WARN, constants.CRIT));
-
-// it (`should set the status to OK, when mongodb topology emits the 'close' event and restarts`, () => testStatusChange('close', constants.OK, 2));
-
-// it (`should set the status to OK, when mongodb topology emits the 'reconnect' event`, () => testStatusChange('reconnect', constants.OK, 1, constants.CRIT));
-
-// it (`should set the status to CRIT, when 'MongoClient.connect' throws an Error`, () => testStatusChange(new Error('error'), constants.CRIT, 1));
+it ('should set the status to OK when Redis client emits the \'ready\' event',
+    () => testStatusChange('reconnecting', constants.WARN, constants.CRIT));
 

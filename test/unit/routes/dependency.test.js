@@ -13,7 +13,8 @@ const check1 = {
     },
 };
 
-it('should return a proper response for existing dependency', async () => expect(testee({ dependency: 'check1_id' }, {
+it('should return a proper response for existing dependency',
+    async () => expect(testee({ dependency: 'check1_id' }, {
         checks: [
             check1,
         ],
@@ -24,7 +25,8 @@ it('should return a proper response for existing dependency', async () => expect
         body: check1.status.status,
     }));
 
-it('should return a proper 404 response for not existing dependency', async () => expect(testee({ dependency: 'fake' }, {
+it('should return a proper 404 response for not existing dependency', 
+    async () => expect(testee({ dependency: 'fake' }, {
         checks: [
             check1,
         ],

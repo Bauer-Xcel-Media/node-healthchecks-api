@@ -1,13 +1,11 @@
 'use strict';
-const path = require('path');
+
 const EventEmitter = require('events'); 
 const constants = require('../constants');
+// uncomment following when https://github.com/facebook/jest/issues/2549 is solved. 
+// const Check = require('../../../lib/check');
 
 const memoryLeakModuleName = 'memory-leak-module';
-
-const TEST_LEAK_STATS = {
-    some: 'leakStats',
-}
 
 const makeMocks = (mockFreememPercentage = 100, mockCpuUsage = 0) => {
     jest.resetModules();
@@ -50,8 +48,9 @@ const makeMocks = (mockFreememPercentage = 100, mockCpuUsage = 0) => {
 };
 
 const testStatusChange = async (expectedStatus, freememPercent, cpuUsage, initialStatus = [ constants.OK ]) => {
-    const { Testee, mockMemoryLeakModule, mockLinkAndRequire, mockFreemem, mockCpu } = makeMocks(freememPercent, cpuUsage);
+    const { Testee } = makeMocks(freememPercent, cpuUsage);
     const testeeInstance = new Testee();
+    testeeInstance.status = initialStatus;
     expect(await testeeInstance.start()).toBe(testeeInstance);
     return expect(testeeInstance.status.status[0]).toEqual(expectedStatus);
 };
@@ -59,6 +58,8 @@ const testStatusChange = async (expectedStatus, freememPercent, cpuUsage, initia
 it ('should instantiate the Self check class properly with default options', async () => {
     const { Testee, mockLinkAndRequire } = makeMocks();
     const testeeInstance = new Testee();
+    // uncomment following when https://github.com/facebook/jest/issues/2549 is solved.
+    // expect(testeeInstance).toBeInstanceOf(Check);
     expect(testeeInstance.config.type).toBe('internal');
     expect(testeeInstance.config.url).toBe('127.0.0.1');
     expect(testeeInstance.config.name).toBe('self-check');
@@ -86,7 +87,7 @@ it ('should instantiate the Self check class properly with given options', async
         },
         secondsToKeepMemoryLeakMsg: 20,
         memwatch: memoryLeakModuleName,
-    }
+    };
     const testeeInstance = new Testee(options);
     expect(testeeInstance.config.type).toBe('internal');
     expect(testeeInstance.config.url).toBe('127.0.0.1');
@@ -102,7 +103,7 @@ it ('should instantiate the Self check class properly with given options', async
 
 
 it ('should be called twice when waiting for the timer loop', async () => {
-    const { Testee, mockMemoryLeakModule, mockLinkAndRequire, mockFreemem, mockCpu } = makeMocks();
+    const { Testee, mockFreemem, mockCpu } = makeMocks();
     jest.useFakeTimers();
     const testeeInstance = new Testee();
     await testeeInstance.start();
@@ -113,15 +114,20 @@ it ('should be called twice when waiting for the timer loop', async () => {
     return expect(mockCpu).toHaveBeenCalledTimes(2);
 });
 
-it ('should set the status to OK when the memory and cpu usage is fine', () => testStatusChange(constants.OK, 0.9, 0.1, [ constants.WARN ]));
+it ('should set the status to OK when the memory and cpu usage is fine',
+    () => testStatusChange(constants.OK, 0.9, 0.1, [ constants.WARN ]));
 
-it ('should set the status to WARN when the memory usage reaches the WARN limit', () => testStatusChange(constants.WARN, (99 - constants.DEFAULT_METRICS_LIMITS.memoryUsage.warn) / 100, 0.1));
+it ('should set the status to WARN when the memory usage reaches the WARN limit',
+    () => testStatusChange(constants.WARN, (99 - constants.DEFAULT_METRICS_LIMITS.memoryUsage.warn) / 100, 0.1));
 
-it ('should set the status to CRIT when the memory usage reaches the CRIT limit', () => testStatusChange(constants.CRIT, (99 - constants.DEFAULT_METRICS_LIMITS.memoryUsage.crit) / 100, 0.1));
+it ('should set the status to CRIT when the memory usage reaches the CRIT limit',
+    () => testStatusChange(constants.CRIT, (99 - constants.DEFAULT_METRICS_LIMITS.memoryUsage.crit) / 100, 0.1));
 
-it ('should set the status to WARN when the CPU usage reaches the WARN limit', () => testStatusChange(constants.WARN, 0.9, (constants.DEFAULT_METRICS_LIMITS.memoryUsage.warn + 1) / 100));
+it ('should set the status to WARN when the CPU usage reaches the WARN limit',
+    () => testStatusChange(constants.WARN, 0.9, (constants.DEFAULT_METRICS_LIMITS.memoryUsage.warn + 1) / 100));
 
-it ('should set the status to CRIT when the CPU usage reaches the CRIT limit', () => testStatusChange(constants.CRIT, 0.9, (constants.DEFAULT_METRICS_LIMITS.memoryUsage.crit + 1) / 100));
+it ('should set the status to CRIT when the CPU usage reaches the CRIT limit',
+    () => testStatusChange(constants.CRIT, 0.9, (constants.DEFAULT_METRICS_LIMITS.memoryUsage.crit + 1) / 100));
 
 it ('should set the status to WARN when the memory leak is reported', async () => {
     jest.useFakeTimers();
@@ -165,7 +171,7 @@ it ('should set the status to CRIT when metrics function throws an Error', async
 });
 
 it ('should set the status to WARN when metrics configuration contains unsupported metric', async () => {
-    const { Testee, mockLinkAndRequire } = makeMocks();
+    const { Testee } = makeMocks();
     const options = {
         metrics: { 
             fakeMetric: {

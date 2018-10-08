@@ -31,7 +31,7 @@ const createMocks = (routeHandler, body = {
         result,
         route: {
             path: '/mypath',
-            handler: jest.fn(routeHandler || (async () => result)),
+            handler: jest.fn(routeHandler || (async () => result)),
         },
         server: {
             get: jest.fn((routePath, handler) => handler),
@@ -75,12 +75,12 @@ it ('should create a proper get handler for given route returning text', async (
     return expect(res.json).not.toHaveBeenCalled();
 });
 
-it (`should call the 'next' callback once the route handler throws an Error`, async () => {
+it ('should call the \'next\' callback once the route handler throws an Error', async () => {
 
     const err = new Error('crash!');
 
     const {
-        next, res, result, route, server
+        next, res, route, server
     } = createMocks(async () => {
         throw err;
     });

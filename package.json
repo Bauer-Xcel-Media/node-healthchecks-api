@@ -9,7 +9,9 @@
     "test:jest": "NODE_ENV=test jest --verbose --coverage ./test/unit",
     "test:success": "echo 'TESTS SUCCESSFUL :-)'",
     "test:failure": "echo 'TESTS FAILED :-(' && exit 1",
-    "cz": "git-cz"
+    "cz": "git-cz",
+    "lint":  "eslint index.js lib test/unit",
+    "pretest": "npm run lint"
   },
   "author": {
     "name": "CORE Services Team",
@@ -58,6 +60,9 @@
     "commitizen": "^3.0.2",
     "cwd": "^0.10.0",
     "cz-conventional-changelog": "^2.1.0",
+    "eslint": "^5.6.1",
+    "eslint-plugin-jest": "^21.24.1",
+    "eslint-plugin-jsdoc": "^3.8.0",
     "istanbul": "^0.4.5",
     "jest": "^23.6.0",
     "nock": "^10.0.0"
