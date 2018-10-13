@@ -1,7 +1,7 @@
 # Health Checks for microservices
 
 [![npm version](https://badge.fury.io/js/healthchecks-api.svg)](https://badge.fury.io/js/healthchecks-api)
-[![GitHub (release)](https://img.shields.io/github/release/Bauer-Xcel-Media/node-healthchecks-api.svg)](https://img.shields.io/github/release/Bauer-Xcel-Media/node-healthchecks-api.svg)
+[![GitHub (release)](https://img.shields.io/github/release/Bauer-Xcel-Media/node-healthchecks-api.svg)](https://github.com/Bauer-Xcel-Media/node-healthchecks-api/releases/latest)
 [![node (tag)](https://img.shields.io/badge/node-%3E=8.0.0-orange.svg)](https://github.com/Bauer-Xcel-Media/node-healthchecks-api/blob/2cadf9ad6e6efa529b4e543dc075c5679900b5f3/package.json#L35)
 [![Build Status](https://travis-ci.org/Bauer-Xcel-Media/node-healthchecks-api.png?branch=master)](https://travis-ci.org/Bauer-Xcel-Media/node-healthchecks-api)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
@@ -470,9 +470,9 @@ One can observe changing `health status` of the `demo-app` application by:
 * `elasticsearch` - [Elasticsearch](https://www.elastic.co/products/elasticsearch) instance,
 * `redis` - [Redis](https://redis.io/) instance.
 
-> NOTE
+> **NOTE**
 >
-> The `service-2` is classified as `non-critical` for the `demo-app` so it will be reported as `WARN` at the `demo-app` dashboard even if it gets the `CRIT` state.
+> _The `service-2` is classified as `non-critical` for the `demo-app` so it will be reported as `WARN` at the `demo-app` dashboard even if it gets the `CRIT` state._
 
 #### Running the test
 
