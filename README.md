@@ -1,7 +1,8 @@
 # Health Checks for microservices
 
 [![npm version](https://badge.fury.io/js/healthchecks-api.svg)](https://badge.fury.io/js/healthchecks-api)
-[![node (tag)](https://img.shields.io/badge/node-%3E=8.0.0-blue.svg)](https://github.com/Bauer-Xcel-Media/node-healthchecks-api/blob/2cadf9ad6e6efa529b4e543dc075c5679900b5f3/package.json#L35)
+[![GitHub (release)](https://img.shields.io/github/release/Bauer-Xcel-Media/node-healthchecks-api.svg)](https://img.shields.io/github/release/Bauer-Xcel-Media/node-healthchecks-api.svg)
+[![node (tag)](https://img.shields.io/badge/node-%3E=8.0.0-orange.svg)](https://github.com/Bauer-Xcel-Media/node-healthchecks-api/blob/2cadf9ad6e6efa529b4e543dc075c5679900b5f3/package.json#L35)
 [![Build Status](https://travis-ci.org/Bauer-Xcel-Media/node-healthchecks-api.png?branch=master)](https://travis-ci.org/Bauer-Xcel-Media/node-healthchecks-api)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![codecov](https://codecov.io/gh/Bauer-Xcel-Media/node-healthchecks-api/branch/master/graph/badge.svg)](https://codecov.io/gh/Bauer-Xcel-Media/node-healthchecks-api)
@@ -44,12 +45,12 @@ A [Node.js](https://nodejs.org) implementation of the [Health Checks API](https:
 ## Installation
 
 ```bash
-npm install --save heathchecks-api
+npm install --save healthchecks-api
 ```
 
 ## Functionality
 
-Enables an application/service combined Health Check view When used in the ecosystem of microservices.
+Enables an application/service combined Health Check view when used in the ecosystem of microservices.
 This includes a service/application self check and following dependency checks:
 
 * `internal` (composed) - local service dependencies (eg. database, cache). Generally these are dedicated local services used only by subject service/application,
@@ -60,20 +61,40 @@ The dependencies can be:
 * `critical` - the subject service/application is considered non-operational when such a dependency is non-operational,
 * `non-critical` - the subject service/application is partly operational even when such a dependency is non-operational, as it can still serve a subset of its capabilities.
 
+> **NOTE**
+>
+> _The `critical/non-critical` dependency atribute is an additional (optional) semantic of **this module  only**._
+>
+>_[Health Checks API](https://github.com/hootsuite/health-checks-api) does not specify such._
+>
+> _Classifying a particular dependency as `non-critical` (`critical: false` attribute of a dependency configuration) results in reporting it being in a `WARN` state at the dependency owner level, when the dependency is reported being in either `WARN` or `CRIT` state at its own level._
+>
+> _Example configuration for `non-critical` dependency:_
+> ```yaml
+> checks:
+>   - name: service-2
+>     critical: false
+>     check: http
+>     url: http://service-2:3002
+> ```
+> _By default all dependencies are classified as `critical`._
+
 Another dependency division is:
 
 * `traversable` - this means the dependency implements the [Health Checks API](https://github.com/hootsuite/health-checks-api) itself and therefore one can traverse to its `Health Check API endpoint` and check its own state together with its dependencies states.
 * `non-traversable` - the dependency health state is still reported by an appropriate check type, but the service does not implement the [Health Checks API](https://github.com/hootsuite/health-checks-api), therefore one cannot drill-down due to observe its internal state details.
 
-__NOTE__: The `traversable` dependency capability is resolved by this module in a runtime.
+> __NOTE__
+>
+> _The `traversable` dependency capability is resolved by this module in a runtime._
 
 ## Health status reports
 
 The health is reported in following states:
 
-* <span style="color:green">OK</span> - all fine ;)
-* <span style="color:yellow">WARN</span> - `warning` - partly operational, the issue report available (description and details).
-* <span style="color:red">CRIT</span> - `critical` - non-operational, the error report available (description and details).
+* __OK__ -  _green_ - all fine ;)
+* __WARN__ - `warning` - _yellow_ - partly operational, the issue report available (description and details).
+* __CRIT__ - `critical` - _red_ - non-operational, the error report available (description and details).
 
 The overall health state of the subject service/application is an aggregation of its own state and its dependencies state. Aggregation is done with a respect to following (the order matters!):
 
@@ -160,8 +181,8 @@ checks:
     secondsToKeepMemoryLeakMsg: 60
     metrics:
       memoryUsage:
-        warn: 30
-        crit: 50
+        warn: 90
+        crit: 95
       cpuUsage:
         warn: 50
         crit: 80
@@ -448,6 +469,10 @@ One can observe changing `health status` of the `demo-app` application by:
 * `mongo` - [Mongo DB](https://www.mongodb.com/) instance,
 * `elasticsearch` - [Elasticsearch](https://www.elastic.co/products/elasticsearch) instance,
 * `redis` - [Redis](https://redis.io/) instance.
+
+> NOTE
+>
+> The `service-2` is classified as `non-critical` for the `demo-app` so it will be reported as `WARN` at the `demo-app` dashboard even if it gets the `CRIT` state.
 
 #### Running the test
 

@@ -8,8 +8,8 @@ checks:
     memwatch: memwatch-next
     metrics:
       memoryUsage:
-        warn: 30
-        crit: 50
+        warn: 90
+        crit: 95
       cpuUsage:
         warn: 30
         crit: 50

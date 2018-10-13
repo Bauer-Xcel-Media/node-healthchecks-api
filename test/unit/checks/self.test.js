@@ -124,10 +124,10 @@ it ('should set the status to CRIT when the memory usage reaches the CRIT limit'
     () => testStatusChange(constants.CRIT, (99 - constants.DEFAULT_METRICS_LIMITS.memoryUsage.crit) / 100, 0.1));
 
 it ('should set the status to WARN when the CPU usage reaches the WARN limit',
-    () => testStatusChange(constants.WARN, 0.9, (constants.DEFAULT_METRICS_LIMITS.memoryUsage.warn + 1) / 100));
+    () => testStatusChange(constants.WARN, 0.9, (constants.DEFAULT_METRICS_LIMITS.cpuUsage.warn + 1) / 100));
 
 it ('should set the status to CRIT when the CPU usage reaches the CRIT limit',
-    () => testStatusChange(constants.CRIT, 0.9, (constants.DEFAULT_METRICS_LIMITS.memoryUsage.crit + 1) / 100));
+    () => testStatusChange(constants.CRIT, 0.9, (constants.DEFAULT_METRICS_LIMITS.cpuUsage.crit + 1) / 100));
 
 it ('should set the status to WARN when the memory leak is reported', async () => {
     jest.useFakeTimers();
