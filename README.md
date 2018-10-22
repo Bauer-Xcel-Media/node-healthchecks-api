@@ -17,6 +17,8 @@ A [Node.js](https://nodejs.org) implementation of the [Health Checks API](https:
     - [Functionality](#functionality)
     - [Health status reports](#health-status-reports)
     - [Usage](#usage)
+        - [Service details (`about` endpoint)](#service-details-about-endpoint)
+        - [Configuration](#configuration)
         - [Example - Express.js powered application](#example---expressjs-powered-application)
     - [Check types](#check-types)
         - [`self` check](#self-check)
@@ -105,6 +107,29 @@ The overall health state of the subject service/application is an aggregation of
 ## Usage
 
 The module works as a middleware, exposing the [Health Checks API](https://hootsuite.github.io/health-checks-api/) routes via chosen `http server` framework routing system.
+
+### Service details (`about` endpoint)
+
+The [Health Checks API `about` endpoint](https://hootsuite.github.io/health-checks-api/#status-about-get) is supposed to describe the underlying service using this module.
+The module takes particular service description attributes either from the [Configuration](#configuration) or mapping them from the service's [package.json](https://docs.npmjs.com/files/package.json) as a fallback.
+Here is the table with particular fields and their optional mapping:
+
+| _Field name_ | _Config attribute_ | _`package.json` fallback - attribute  mapping_ | _Static or dynamic fallback_ |
+|--------------|--------------------|------------------------------------------------|------------------------------|
+| id           | name               | name                                           | -                            |
+| name         | name               | name                                           | -                            |
+| description  | description        | description                                    | -                            |
+| version      | version            | version                                        | 'x.x.x'                      |
+| host         | host               | -                                              | require('os').hostname()     |
+| protocol     | protocol           | -                                              | 'http'                       |
+| projectHome  | projectHome        | homepage                                       | -                            |
+| projectRepo  | projectRepo        | repository.url                                 | 'unknown'                    |
+| owners       | owners             | author + contributors                          | -                            |
+| logsLinks    | logsLinks          | -                                              | -                            |
+| statsLinks   | statsLinks         | -                                              | -                            |
+| dependencies | checks             | -                                              | -                            |
+
+### Configuration
 
 The module configuration is a single `yaml` file and represents the subject service/application context.
 The default path for the config file is `./conf/dependencies.yml`.

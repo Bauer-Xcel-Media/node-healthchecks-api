@@ -1,7 +1,11 @@
-version: "3.1"
+version: "3.0.2"
 
 name: service-2
-description: Service-1 awesome service
+description: Incredible Service-2
+statsLinks:
+  - https://my-stats/service-2
+logsLinks:
+  - https://my-logs/service-2
 
 checks:
   - check: self

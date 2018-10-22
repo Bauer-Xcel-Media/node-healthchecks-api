@@ -1,7 +1,13 @@
-version: "3.1"
+
+# the 'version' will be taken from the package.json
 
 name: demo-app
 description: Nice demo application :)
+statsLinks:
+  - https://my-stats/demo-app
+logsLinks:
+  - https://my-logs/demo-app/info
+  - https://my-logs/demo-app/debug
 
 checks:
   - check: self
