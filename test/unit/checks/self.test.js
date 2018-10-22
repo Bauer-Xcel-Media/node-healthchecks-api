@@ -60,10 +60,11 @@ it ('should instantiate the Self check class properly with default options', asy
     const testeeInstance = new Testee();
     // uncomment following when https://github.com/facebook/jest/issues/2549 is solved.
     // expect(testeeInstance).toBeInstanceOf(Check);
-    expect(testeeInstance.config.type).toBe('internal');
+    expect(testeeInstance.config.type).toBe(constants.SERVICE_TYPE_INTERNAL);
     expect(testeeInstance.config.url).toBe('127.0.0.1');
-    expect(testeeInstance.config.name).toBe('self-check');
-    expect(testeeInstance.config.statusPath).toBe('self-check');
+    expect(testeeInstance.config.name).toBe(constants.SELF_CHECK_ID);
+    expect(testeeInstance.config.statusPath).toBe(constants.SELF_CHECK_ID);
+    expect(testeeInstance.id).toBe(constants.SELF_CHECK_ID);
     expect(testeeInstance.status.status).toEqual([ constants.OK ]);
     expect(testeeInstance.metrics).toEqual(constants.DEFAULT_METRICS_LIMITS);
     expect(testeeInstance.secondsToKeepMemoryLeakMsg).toBe(constants.DEFAULT_SECONDS_TO_KEEP_MEMORY_LEAK_MSG);

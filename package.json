@@ -52,11 +52,14 @@
   "keywords": [
     "health",
     "healthcheck",
+    "healthchecks",
+    "health-check",
     "health-checks",
     "microservice",
     "microservices",
     "hootsuite",
-    "health-checks-api"
+    "health-checks-api",
+    "healthchecks-api"
   ],
   "devDependencies": {
     "commitizen": "^3.0.2",
