@@ -111,23 +111,28 @@ The module works as a middleware, exposing the [Health Checks API](https://hoots
 ### Service details (`about` endpoint)
 
 The [Health Checks API `about` endpoint](https://hootsuite.github.io/health-checks-api/#status-about-get) is supposed to describe the underlying service using this module.
-The module takes particular service description attributes either from the [Configuration](#configuration) or mapping them from the service's [package.json](https://docs.npmjs.com/files/package.json) as a fallback.
-Here is the table with particular fields and their optional mapping:
+The module takes particular service description attributes either from the [Configuration](#configuration) or mapping them from the service's [package.json](https://docs.npmjs.com/files/package.json) as a fallback. When particular attribute is missing both in the service config and in `package.json` a default value is taken, when provided.
 
-| _Field name_ | _Config attribute_ | _`package.json` fallback - attribute  mapping_ | _Static or dynamic fallback_ |
-|--------------|--------------------|------------------------------------------------|------------------------------|
-| id           | name               | name                                           | -                            |
-| name         | name               | name                                           | -                            |
-| description  | description        | description                                    | -                            |
-| version      | version            | version                                        | 'x.x.x'                      |
-| host         | host               | -                                              | require('os').hostname()     |
-| protocol     | protocol           | -                                              | 'http'                       |
-| projectHome  | projectHome        | homepage                                       | -                            |
-| projectRepo  | projectRepo        | repository.url                                 | 'unknown'                    |
-| owners       | owners             | author + contributors                          | -                            |
-| logsLinks    | logsLinks          | -                                              | -                            |
-| statsLinks   | statsLinks         | -                                              | -                            |
-| dependencies | checks             | -                                              | -                            |
+Here is the table with particular fields, their mapping to config attributes and fallback mapping to `package.json` and optional defaults:
+
+| _Attribute name_ | _Config attribute name_ | _`package.json` fallback - attribute  mapping_ | _Static or dynamic fallback (defaults)_ |
+|------------------|-------------------------|------------------------------------------------|-----------------------------------------|
+| id               | name                    | name                                           | -                                       |
+| name             | name                    | name                                           | -                                       |
+| description      | description             | description                                    | -                                       |
+| version          | version                 | version                                        | 'x.x.x'                                 |
+| host             | host                    | -                                              | require('os').hostname()                |
+| protocol         | protocol                | -                                              | 'http'                                  |
+| projectHome      | projectHome             | homepage                                       | -                                       |
+| projectRepo      | projectRepo             | repository.url                                 | 'unknown'                               |
+| owners           | owners                  | author + contributors                          | -                                       |
+| logsLinks        | logsLinks               | -                                              | -                                       |
+| statsLinks       | statsLinks              | -                                              | -                                       |
+| dependencies     | checks                  | -                                              | -                                       |
+
+> __NOTE__
+>
+> _The final value is resolved with a fallback from left to right, as presented in above table._
 
 ### Configuration
 
