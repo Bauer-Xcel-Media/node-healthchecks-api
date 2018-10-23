@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "",
   "main": "service.js",
+  "homepage": "https://my-org/health-check-test-service",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node service.js"
@@ -19,6 +20,10 @@
           "url": "https://github.com/valdemon"
       }
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://my-repo/health-check-test-service.git"
+  },
   "license": "MIT",
   "dependencies": {
     "healthchecks-api": "../..",

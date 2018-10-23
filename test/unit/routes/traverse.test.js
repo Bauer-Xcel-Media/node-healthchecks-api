@@ -1,6 +1,7 @@
 'use strict';
 
 const status = require('http-status');
+const os = require('os');
 const nock = require('nock');
 const constants = require('../constants');
 const testee = require('../../../lib/routes/traverse');
@@ -123,7 +124,7 @@ it('should return an \'about\' response when request paramete \'dependency\' is 
         }, config, {
             id: config.name,
             protocol: 'http',
-            host: `http://${host}`,
+            host: os.hostname(),
             version: constants.DEFAULT_SERVICE_VERSION,
             owners: [ packageJson.author ],
         }),
