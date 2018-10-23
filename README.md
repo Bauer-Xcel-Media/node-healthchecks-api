@@ -474,7 +474,7 @@ The `addChecks` method can take a value of following parameter types as an argum
 
 ### Unit tests
 
-[![codecov](https://codecov.io/gh/Bauer-Xcel-Media/node-healthchecks-api/branch/master/graph/badge.svg)](https://codecov.io/gh/Bauer-Xcel-Media/node-healthchecks-api)
+[![codecov](https://codecov.io/gh/Bauer-Xcel-Media/node-healthchecks-api/branch/master/graph/badge.svg)](https://codecov.io/gh/Bauer-Xcel-Media/node-healthchecks-api) [![Greenkeeper badge](https://badges.greenkeeper.io/Bauer-Xcel-Media/node-healthchecks-api.svg)](https://greenkeeper.io/)
 
 Run unit tests locally:
 
