@@ -9,6 +9,7 @@
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![Waffle.io - Issues in progress](https://badge.waffle.io/Bauer-Xcel-Media/node-healthchecks-api.png?label=in%20progress&title=In%20Progress)](http://waffle.io/Bauer-Xcel-Media/node-healthchecks-api)
 [![Known Vulnerabilities](https://snyk.io/test/github/Bauer-Xcel-Media/node-healthchecks-api/badge.svg)](https://snyk.io/test/github/Bauer-Xcel-Media/node-healthchecks-api)
+[![Greenkeeper badge](https://badges.greenkeeper.io/Bauer-Xcel-Media/node-healthchecks-api.svg)](https://greenkeeper.io/)
 
 A [Node.js](https://nodejs.org) implementation of the [Health Checks API](https://github.com/hootsuite/health-checks-api) provided by [Hootsuite](https://hootsuite.com/).
 
