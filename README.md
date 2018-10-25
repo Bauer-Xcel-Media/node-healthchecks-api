@@ -7,6 +7,9 @@
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![codecov](https://codecov.io/gh/Bauer-Xcel-Media/node-healthchecks-api/branch/master/graph/badge.svg)](https://codecov.io/gh/Bauer-Xcel-Media/node-healthchecks-api)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![Waffle.io - Issues in progress](https://badge.waffle.io/Bauer-Xcel-Media/node-healthchecks-api.png?label=in%20progress&title=In%20Progress)](http://waffle.io/Bauer-Xcel-Media/node-healthchecks-api)
+[![Known Vulnerabilities](https://snyk.io/test/github/Bauer-Xcel-Media/node-healthchecks-api/badge.svg)](https://snyk.io/test/github/Bauer-Xcel-Media/node-healthchecks-api)
+[![Greenkeeper badge](https://badges.greenkeeper.io/Bauer-Xcel-Media/node-healthchecks-api.svg)](https://greenkeeper.io/)
 
 A [Node.js](https://nodejs.org) implementation of the [Health Checks API](https://github.com/hootsuite/health-checks-api) provided by [Hootsuite](https://hootsuite.com/).
 
@@ -19,7 +22,8 @@ A [Node.js](https://nodejs.org) implementation of the [Health Checks API](https:
     - [Usage](#usage)
         - [Service details (`about` endpoint)](#service-details-about-endpoint)
         - [Configuration](#configuration)
-        - [Example - Express.js powered application](#example---expressjs-powered-application)
+        - [Initialization](#initialization)
+            - [Example - Express.js powered application](#example---expressjs-powered-application)
     - [Check types](#check-types)
         - [`self` check](#self-check)
             - [Memory leak detection](#memory-leak-detection)
@@ -171,10 +175,49 @@ checks:
     check: http
 ```
 
-The library declaration depends on chosen `http server` framework, but in any case this will be about 2 lines of code.
+> **NOTE**
+>
+> _Alternatively the configuration can be passed directly to the module initialization as an `options.service.config` attribute object value:_
+>
+> ```javascript
+> const healthCheck = require('healthchecks-api');
+> const express = require('express');
+> const app = express();
+> await healthCheck(app,
+>        {
+>            adapter: 'express',
+>            service: {
+>                config: {
+>                   name: 'demo-app',
+>                   description: 'Nice demo application :)',
+>                   statsLinks: [ 'https://my-stats/demo-app' ],
+>                   logsLinks: [ 'https://my-logs/demo-app/info', 'https://my-logs/demo-app/debug' ],
+>                   checks: [
+>                       {
+>                           name: 'mongo',
+>                           url: 'mongodb://mongo/test',
+>                           type: 'internal',
+>                           interval: 3000,
+>                           check: 'mongo',
+>                       },
+>                       {
+>                           name: 'service-1',
+>                           url: 'http://service-1:3001',
+>                           interval: 1000,
+>                           check: 'http',
+>                       }
+>                    ]
+>                },
+>            },
+>        })
+>```
+
+### Initialization
+
+The library initialization depends on chosen `http server` framework, but in any case this will be about 2 lines of code.
 See the examples below.
 
-### Example - Express.js powered application
+#### Example - Express.js powered application
 
 See: [Express.js framework](https://expressjs.com/).
 
@@ -186,7 +229,7 @@ const startServer = async () => {
     // some initialization steps
 
     await healthCheck(app);
-    // rest of initialization stepa
+    // rest of initialization steps
 }
 
 startServer();
