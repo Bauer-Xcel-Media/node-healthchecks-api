@@ -7,6 +7,7 @@ const Check = require('../../lib/check');
 
 const PATH_CHECKS = path.join(constants.CWD, '/lib/checks');
 const PATH_CHECKS_MYCHECK = path.join(PATH_CHECKS, 'mycheck');
+const PATH_CHECKS_WRONG_CHECK = path.join(PATH_CHECKS, 'wrongcheck');
 
 const PATH_ADAPTERS = path.join(constants.CWD, '/lib/adapters');
 const PATH_ADAPTERS_MYADAPTER = path.join(PATH_ADAPTERS, 'myadapter');
@@ -15,6 +16,9 @@ const PATH_ADAPTERS_DEFAULT_ADAPTER = path.join(PATH_ADAPTERS, constants.DEFAULT
 const PATH_ROUTES = path.join(constants.CWD, '/lib/routes');
 const PATH_ROUTES_MYROUTE = path.join(PATH_ROUTES, 'myroute');
 const PATH_ROUTES_MYROUTE2 = path.join(PATH_ROUTES, 'myroute2');
+const PATH_ROUTES_MYROUTE3 = path.join(PATH_ROUTES, 'myroute3');
+const PATH_ROUTES_MYROUTE4 = path.join(PATH_ROUTES, 'myroute4');
+const PATH_ROUTES_MYROUTE5 = path.join(PATH_ROUTES, 'myroute5');
 
 const MOCK_CHECK_CONFIG = {
     name: 'mycheck',
@@ -28,16 +32,20 @@ const MOCK_CONFIG = {
 };
 
 const mockPathToContent = {
-    [PATH_CHECKS]: ['mycheck'],
+    [PATH_CHECKS]: ['mycheck', 'wrongcheck'],
     [PATH_ADAPTERS]: ['myadapter', 'express'],
     // route sorter should push the parametrized routes at the end
-    [PATH_ROUTES]: ['myroute2', 'myroute'],
+    [PATH_ROUTES]: ['myroute5', 'myroute2', 'myroute', 'myroute4', 'myroute3'],
 };
 
 const mockAdapter = jest.fn();
 const mockMyRoute = jest.fn();
 const mockMyRoute2 = jest.fn();
 mockMyRoute2.path = '/:myparam';
+const mockMyRoute3 = jest.fn();
+const mockMyRoute4 = jest.fn();
+mockMyRoute4.path = '/:myparam2';
+const mockMyRoute5 = jest.fn();
 const mockServer = jest.fn();
 
 const mockLinkAndRequireResult = {
@@ -87,7 +95,6 @@ class mockMyCheckClass6 extends createCheckClass('crit') {}
 let mockConfig = MOCK_CONFIG;
 
 const mockYamlConfig = () => {
-    // jest.unmock('js-yaml');
     jest.mock('js-yaml', () => ({
         safeLoad: jest.fn(() => mockConfig),
     }), constants.VIRTUAL);
@@ -99,8 +106,12 @@ const mockModules = () => {
     jest.mock(PATH_ADAPTERS_MYADAPTER, () => mockAdapter, constants.VIRTUAL);
     jest.mock(PATH_ADAPTERS_DEFAULT_ADAPTER, () => mockAdapter, constants.VIRTUAL);
     jest.mock(PATH_CHECKS_MYCHECK, () => mockMyCheckClass, constants.VIRTUAL);
+    jest.mock(PATH_CHECKS_WRONG_CHECK, () => ({}), constants.VIRTUAL);
     jest.mock(PATH_ROUTES_MYROUTE, () => mockMyRoute, constants.VIRTUAL);
     jest.mock(PATH_ROUTES_MYROUTE2, () => mockMyRoute2, constants.VIRTUAL);
+    jest.mock(PATH_ROUTES_MYROUTE3, () => mockMyRoute3, constants.VIRTUAL);
+    jest.mock(PATH_ROUTES_MYROUTE4, () => mockMyRoute4, constants.VIRTUAL);
+    jest.mock(PATH_ROUTES_MYROUTE5, () => mockMyRoute5, constants.VIRTUAL);
     jest.mock('fs', () => {
         return {
             readdir: (pathname, callback) => {
@@ -120,7 +131,13 @@ const initializationExpectations = () => {
     expect(mockAdapter).toHaveBeenNthCalledWith(1, 
         expect.objectContaining({ packageJson }), mockServer, { handler: mockMyRoute, path: '/myroute' } );
     expect(mockAdapter).toHaveBeenNthCalledWith(2, 
+        expect.objectContaining({ packageJson }), mockServer, { handler: mockMyRoute3, path: '/myroute3' } );
+    expect(mockAdapter).toHaveBeenNthCalledWith(3, 
+        expect.objectContaining({ packageJson }), mockServer, { handler: mockMyRoute5, path: '/myroute5' } );
+    expect(mockAdapter).toHaveBeenNthCalledWith(4, 
         expect.objectContaining({ packageJson }), mockServer, { handler: mockMyRoute2, path: '/:myparam' } );
+    expect(mockAdapter).toHaveBeenNthCalledWith(5, 
+        expect.objectContaining({ packageJson }), mockServer, { handler: mockMyRoute4, path: '/:myparam2' } );
     checkClassExpectations(mockMyCheckClass, MOCK_CHECK_CONFIG);
 };
 
@@ -167,11 +184,56 @@ describe('Initialization', async () => {
         initializationExpectations();
     });
 
+    it ('should set empty checks array on the service when config is given without checks array declared', async () => {
+        const service = {
+            packageJson,
+            config: {},
+        };
+        await testee(mockServer, { 
+            adapter: mockAdapter,
+            service,
+        });
+        return expect(service.checks).toEqual([]);
+    });
+
     it ('should fail when wrong adapter type is provided', 
         async () => expect(testee(mockServer, { adapter: 1 })).rejects.toThrow('adapter=1'));
 
     it ('should fail when not existing config path is provided', async () => expect(testee(mockServer,
         { service: { configPath: 'does-not-exist' }})).rejects.toThrow('does-not-exist'));
+
+    it ('should fail when config with unsupported check is provided', async () => expect(testee(mockServer, 
+        {
+            adapter: mockAdapter,
+            service: {
+                packageJson,
+                config: {
+                    checks: [
+                        {
+                            name: 'fake',
+                            check: 'fake',
+                            type: 'internal',
+                        }
+                    ]
+                }
+            },
+        })).rejects.toThrow('not supported'));
+    it ('should fail when config with wrong check class is provided', async () => expect(testee(mockServer, 
+        {
+            adapter: mockAdapter,
+            service: {
+                packageJson,
+                config: {
+                    checks: [
+                        {
+                            name: 'wrongcheck',
+                            check: 'wrongcheck',
+                            type: 'internal',
+                        }
+                    ]
+                }
+            },
+        })).rejects.toThrow('not an instance'));
 });
 
 describe('addChecks method', async () => {

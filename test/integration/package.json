@@ -14,11 +14,11 @@
     "url": "http://confluence.bauermedia-digital.com/display/TEAM/Team+Core+Services"
   },
   "contributors": [
-      {
-          "name": "Waldek Kozba",
-          "email": "100assc@gmail.com",
-          "url": "https://github.com/valdemon"
-      }
+    {
+      "name": "Waldek Kozba",
+      "email": "100assc@gmail.com",
+      "url": "https://github.com/valdemon"
+    }
   ],
   "repository": {
     "type": "git",

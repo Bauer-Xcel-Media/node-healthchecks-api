@@ -22,7 +22,8 @@ A [Node.js](https://nodejs.org) implementation of the [Health Checks API](https:
     - [Usage](#usage)
         - [Service details (`about` endpoint)](#service-details-about-endpoint)
         - [Configuration](#configuration)
-        - [Example - Express.js powered application](#example---expressjs-powered-application)
+        - [Initialization](#initialization)
+            - [Example - Express.js powered application](#example---expressjs-powered-application)
     - [Check types](#check-types)
         - [`self` check](#self-check)
             - [Memory leak detection](#memory-leak-detection)
@@ -174,10 +175,49 @@ checks:
     check: http
 ```
 
-The library declaration depends on chosen `http server` framework, but in any case this will be about 2 lines of code.
+> **NOTE**
+>
+> _Alternatively the configuration can be passed directly to the module initialization as an `options.service.config` attribute object value:_
+>
+> ```javascript
+> const healthCheck = require('healthchecks-api');
+> const express = require('express');
+> const app = express();
+> await healthCheck(app,
+>        {
+>            adapter: 'express',
+>            service: {
+>                config: {
+>                   name: 'demo-app',
+>                   description: 'Nice demo application :)',
+>                   statsLinks: [ 'https://my-stats/demo-app' ],
+>                   logsLinks: [ 'https://my-logs/demo-app/info', 'https://my-logs/demo-app/debug' ],
+>                   checks: [
+>                       {
+>                           name: 'mongo',
+>                           url: 'mongodb://mongo/test',
+>                           type: 'internal',
+>                           interval: 3000,
+>                           check: 'mongo',
+>                       },
+>                       {
+>                           name: 'service-1',
+>                           url: 'http://service-1:3001',
+>                           interval: 1000,
+>                           check: 'http',
+>                       }
+>                    ]
+>                },
+>            },
+>        })
+>```
+
+### Initialization
+
+The library initialization depends on chosen `http server` framework, but in any case this will be about 2 lines of code.
 See the examples below.
 
-### Example - Express.js powered application
+#### Example - Express.js powered application
 
 See: [Express.js framework](https://expressjs.com/).
 
@@ -189,7 +229,7 @@ const startServer = async () => {
     // some initialization steps
 
     await healthCheck(app);
-    // rest of initialization stepa
+    // rest of initialization steps
 }
 
 startServer();
