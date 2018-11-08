@@ -16,6 +16,14 @@ checks:
     type: internal
     interval: 3000
     check: mongo
+  - name: mysql
+    url: mysql
+    type: internal
+    interval: 3000
+    check: mysql
+    user: root
+    password: example
+    database: mysql
 
 
 
