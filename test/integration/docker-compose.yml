@@ -80,3 +80,10 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:${ELK_VERSION:-6.3.0}
     ports:
       - "9200:9200"
+
+  mysql:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example

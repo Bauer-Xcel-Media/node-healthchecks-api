@@ -31,6 +31,7 @@ A [Node.js](https://nodejs.org) implementation of the [Health Checks API](https:
         - [`mongo` check](#mongo-check)
         - [`redis` check](#redis-check)
         - [`elasticsearch` check](#elasticsearch-check)
+        - [`mysql` check](#mysql-check)
     - [Development](#development)
         - [Framework adapters](#framework-adapters)
         - [Developing new check types](#developing-new-check-types)
@@ -335,6 +336,28 @@ checks:
     url: elasticsearch:9200
     type: internal
 ```
+
+### `mysql` check
+
+Checks the availability of the [MySQL](https://www.mysql.com/) instance at given `url`.
+
+Example config:
+
+```yaml
+checks:
+ - name: mysql
+    url: mysql
+    type: internal
+    interval: 3000
+    check: mysql
+    user: root
+    password: example
+    database: mysql
+```
+
+> **NOTE**
+>
+> _The `url` config property maps to the `host` property of the [mysql connection options](https://www.npmjs.com/package/mysql#connection-options)._
 
 ## Development
 
