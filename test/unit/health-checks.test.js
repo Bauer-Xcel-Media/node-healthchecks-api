@@ -161,7 +161,7 @@ beforeEach(async () => {
     jest.clearAllMocks();
 });
 
-describe('Initialization', async () => {
+describe('Initialization', () => {
 
     it ('should initialize properly with the default adapter', async () => {
         await testee(mockServer);
@@ -236,7 +236,7 @@ describe('Initialization', async () => {
         })).rejects.toThrow('not an instance'));
 });
 
-describe('addChecks method', async () => {
+describe('addChecks method', () => {
 
     it ('should define a single check class given expicitly', async () => {
         const checks = await testee.addChecks(mockMyCheckClass2);
@@ -264,7 +264,7 @@ describe('addChecks method', async () => {
     it ('should fail when wrong check type is provided', async () => expect(testee.addChecks(1)).rejects.toThrow('1'));
 });
 
-describe('check sorter test', async () => {
+describe('check sorter test', () => {
 
     it ('should sort check instances properly according to their state', async () => {
 
