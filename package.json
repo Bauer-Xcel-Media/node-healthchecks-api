@@ -47,7 +47,7 @@
     "mysql": "^2.16.0",
     "os-utils": "0.0.14",
     "redis": "^2.8.0",
-    "superagent": "^5.0.2",
+    "superagent": "^5.0.9",
     "superagent-no-cache": "^0.1.1"
   },
   "keywords": [
