@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "elasticsearch": "^16.0.0",
-    "http-status": "^1.2.0",
+    "http-status": "^1.4.0",
     "js-yaml": "^3.13.1",
     "json-stringify-safe": "^5.0.1",
     "mime-types": "^2.1.20",
