@@ -46,7 +46,7 @@
     "mongodb": "^3.1.4",
     "mysql": "^2.16.0",
     "os-utils": "0.0.14",
-    "redis": "^2.8.0",
+    "redis": "^3.1.1",
     "superagent": "^5.0.2",
     "superagent-no-cache": "^0.1.1"
   },
